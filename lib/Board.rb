@@ -22,31 +22,97 @@ class Board
     return self
   end
 
-  def check_winner(playerA,playerB)
-    return "Player 1 is the winner"
+  def check_winner
+    arr = self.arr
+    newArr = []
+    selfArr = []
+    for i in 0..arr.length - 1 do
+      for j in 0..arr.length do
+        if j < 2
+          newArr.push(arr[i][j])
+          newArr.push(arr[i][j + 1])
+          newArr.push(arr[i][j + 2])
+          newArr.push(arr[i][j + 3])
+          selfArr.push(newArr)
+          newArr = []
+        end
+        if i < 1
+          newArr.push(arr[i][j])
+          newArr.push(arr[i + 1][j])
+          newArr.push(arr[i + 2][j])
+          newArr.push(arr[i + 3][j])
+          selfArr.push(newArr)
+          newArr = []
+        end
+        if j < 2 && (i < 1)
+          newArr.push(arr[i][j])
+          newArr.push(arr[i + 1][j + 1])
+          newArr.push(arr[i + 2][j + 2])
+          newArr.push(arr[i + 3][j + 3])
+          selfArr.push(newArr)
+          newArr = []
+        end
+        next unless i == 0 && (j > 2)
+
+        newArr.push(arr[i][j])
+        newArr.push(arr[i + 1][j - 1])
+        newArr.push(arr[i + 2][j - 2])
+        newArr.push(arr[i + 3][j - 3])
+        selfArr.push(newArr)
+        newArr = []
+      end
+    end
+    selfArr
+  end
+
+  def check_who_is_the_winner
+
+    combos_arr = check_winner
+    combos_arr.each do |element|
+      if element[0]==element[1]
+        if element[1]==element[2]
+          if element[2]==element[3]
+            return " we got ourservles a winner"
+          end
+        end
+
+      end
+    end
   end
 
 end
 
-# p "Enter the First player's name and marker"
-# player1 = Players.new(gets.chomp, gets.chomp)
-# p "Enter the Second player's name and marker"
-# player2 = Players.new(gets.chomp, gets.chomp)
+p "Enter the First player's name and marker"
+player1 = Players.new(gets.chomp, gets.chomp)
+p "Enter the Second player's name and marker"
+player2 = Players.new(gets.chomp, gets.chomp)
 
-# c = Board.new
-# p " Please enter the positon you would like to insert the first person marker"
-# i = gets.chomp.to_i
-# c.insert_values(player1.marker, i-1)
-# p c
-# p " Please enter the positon you would like to insert the second person marker"
-# i = gets.chomp.to_i
-# c.insert_values(player2.marker,i-1)
-# p c
-# p " Please enter the positon you would like to insert the first person marker"
-# i = gets.chomp.to_i
-# c.insert_values(player1.marker,i-1)
-# p c
-# p " Please enter the positon you would like to insert the second person marker"
-# i = gets.chomp.to_i
-# c.insert_values(player2.marker,i-1)
-# p c
+c = Board.new
+p " Please enter the positon you would like to insert the first person marker"
+i = gets.chomp.to_i
+c.insert_values(player1.marker, i-1)
+p c
+p " Please enter the positon you would like to insert the second person marker"
+i = gets.chomp.to_i
+c.insert_values(player2.marker,i-1)
+p c
+p " Please enter the positon you would like to insert the first person marker"
+i = gets.chomp.to_i
+c.insert_values(player1.marker,i-1)
+p c
+p " Please enter the positon you would like to insert the second person marker"
+i = gets.chomp.to_i
+c.insert_values(player2.marker,i-1)
+p c
+p " Please enter the positon you would like to insert the first person marker"
+i = gets.chomp.to_i
+c.insert_values(player1.marker,i-1)
+p c
+p " Please enter the positon you would like to insert the second person marker"
+i = gets.chomp.to_i
+c.insert_values(player2.marker,i-1)
+p c
+p " Please enter the positon you would like to insert the first person marker"
+i = gets.chomp.to_i
+c.insert_values(player1.marker,i-1)
+p c.check_who_is_the_winner

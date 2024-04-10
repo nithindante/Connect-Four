@@ -26,7 +26,7 @@ describe Board do
       board.insert_values(player1.marker,0)
       board.insert_values(player1.marker,0)
       board.insert_values(player1.marker,0)
-      expect(board.check_winner(player1,player2)).to eq("Player 1 is the winner")
+      expect(board.check_winner(board,player1,player2)).to eq("Player 1 is the winner")
     end
   end
 end
