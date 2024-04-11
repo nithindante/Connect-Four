@@ -9,14 +9,19 @@ class Board
   def insert_values(marker,index)
     arrays = self.arr
     if (arrays[0][index]!=nil)
+        p "the column is already filled"
         return "the column is already filled"
     elsif(arrays[1][index]!=nil)
+          p "kundi"
             arrays[0][index]=marker
     elsif(arrays[2][index]!=nil)
+        p "vali"
         arrays[1][index] = marker
     elsif(arrays[3][index]!=nil)
+      p "kushu"
       arrays[2][index] = marker
     else
+      p "fuck"
     arrays[3][index] = marker
     end
     return self
@@ -66,20 +71,26 @@ class Board
   end
 
   def check_who_is_the_winner
-
     combos_arr = check_winner
     combos_arr.each do |element|
       if element[0]==element[1]
         if element[1]==element[2]
           if element[2]==element[3]
-            return " we got ourservles a winner"
+            return element[2]
           end
         end
-
       end
     end
   end
+end
 
+
+def check_result(result,player1,player2)
+  if result == player1.marker
+    return "#{player1.name} is the winner"
+  elsif result == player2.marker
+    return "#{player2.name} is the winner"
+  end
 end
 
 p "Enter the First player's name and marker"
@@ -88,31 +99,24 @@ p "Enter the Second player's name and marker"
 player2 = Players.new(gets.chomp, gets.chomp)
 
 c = Board.new
-p " Please enter the positon you would like to insert the first person marker"
-i = gets.chomp.to_i
-c.insert_values(player1.marker, i-1)
-p c
-p " Please enter the positon you would like to insert the second person marker"
-i = gets.chomp.to_i
-c.insert_values(player2.marker,i-1)
-p c
-p " Please enter the positon you would like to insert the first person marker"
-i = gets.chomp.to_i
-c.insert_values(player1.marker,i-1)
-p c
-p " Please enter the positon you would like to insert the second person marker"
-i = gets.chomp.to_i
-c.insert_values(player2.marker,i-1)
-p c
-p " Please enter the positon you would like to insert the first person marker"
-i = gets.chomp.to_i
-c.insert_values(player1.marker,i-1)
-p c
-p " Please enter the positon you would like to insert the second person marker"
-i = gets.chomp.to_i
-c.insert_values(player2.marker,i-1)
-p c
-p " Please enter the positon you would like to insert the first person marker"
-i = gets.chomp.to_i
-c.insert_values(player1.marker,i-1)
-p c.check_who_is_the_winner
+
+for i in 0..19
+ p " Please enter the positon you would like to insert the first person marker"
+ i = gets.chomp.to_i
+ while (c.insert_values(player1.marker, i-1).to_s).eql?("the column is already filled")
+  p " Please enter the positon you would like to again insert the first person marker"
+  i = gets.chomp.to_i
+  c.insert_values(player1.marker, i-1)
+ end
+ result = c.check_who_is_the_winner
+ check_result(result,player1,player2)
+ p " Please enter the positon you would like to insert the second person marker"
+ j = gets.chomp.to_i
+ while (c.insert_values(player1.marker, j-1).to_s).eql?("the column is already filled")
+  p " Please enter the positon you would like to again insert the second person marker"
+  j = gets.chomp.to_i
+  c.insert_values(player1.marker, j-1)
+ end
+ result = c.check_who_is_the_winner
+ check_result(result,player1,player2)
+end
