@@ -86,45 +86,47 @@ class Board
 end
 
 
-def check_result(result,player1,player2)
-  if result == player1.marker
-    return 1
-  elsif result == player2.marker
-    return 2
+  def check_result(result,player1,player2)
+    if result == player1.marker
+      return 1
+    elsif result == player2.marker
+      return 2
+    end
   end
-end
 
 p "Enter the First player's name and marker"
 player1 = Players.new(gets.chomp, gets.chomp)
 p "Enter the Second player's name and marker"
 player2 = Players.new(gets.chomp, gets.chomp)
-c = Board.new
+connect_four_board = Board.new
+
+  def enter_values(player,connect_four_board)
+    p "Please enter the position you would like for #{player.name}"
+    i = gets.chomp.to_i
+    while (c.insert_values(player.marker, i-1).to_s).eql?("the column is already filled")
+      p " Please enter the positon you would like to again insert the first person marker"
+      i = gets.chomp.to_i
+      c.insert_values(player.marker, i-1)
+    end
+  end
 
 for n in 0..19
- p " Please enter the positon you would like to insert the first person marker"
- i = gets.chomp.to_i
- while (c.insert_values(player1.marker, i-1).to_s).eql?("the column is already filled")
-  p " Please enter the positon you would like to again insert the first person marker"
-  i = gets.chomp.to_i
-  c.insert_values(player1.marker, i-1)
- end
- p c
- result = c.check_who_is_the_winner
- if check_result(result,player1,player2) == 1
-  p "Player 1 is the winner"
-  return
- end
- p " Please enter the positon you would like to insert the second person marker"
- j = gets.chomp.to_i
- while (c.insert_values(player2.marker, j-1).to_s).eql?("the column is already filled")
-  p " Please enter the positon you would like to again insert the second person marker"
-  j = gets.chomp.to_i
-  c.insert_values(player1.marker, j-1)
- end
- p c
- result = c.check_who_is_the_winner
- if check_result(result,player1,player2) == 2
-  p "Player 2 is the winner"
-  return
- end
+  enter_values(player1,connect_four_board)
+  result = c.check_who_is_the_winner
+  if check_result(result,player1,player2) == 1
+    p "Player 1 is the winner"
+    return
+  elsif check_result(result,player1,player2) == 2
+    p "Player 2 is the winner"
+    return
+  end
+  enter_values(player2,connect_four_board)
+  result = c.check_who_is_the_winner
+  if check_result(result,player1,player2) == 1
+    p "Player 1 is the winner"
+    return
+  elsif check_result(result,player1,player2) == 2
+    p "Player 2 is the winner"
+    return
+  end
 end
